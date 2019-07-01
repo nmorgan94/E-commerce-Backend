@@ -26,16 +26,18 @@ public class ECommerceApplication {
 
 	}
 	
+	
+	
     @Bean
     CommandLineRunner runner(ProductService productService, BasketService basketService, RoleService roleService) {
         return args -> {
-            productService.save(new Product(1L, "TV Set", 300.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(2L, "Game Console", 200.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(3L, "Sofa", 100.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(4L, "Icecream", 5.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(5L, "Beer", 3.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(6L, "Phone", 500.00, "https://via.placeholder.com/200X100"));
-            productService.save(new Product(7L, "Watch", 30.00, "https://via.placeholder.com/200X100"));  
+            productService.save(new Product(1L, "TV Set", 300.00, "https://via.placeholder.com/200X100?text=1"));
+            productService.save(new Product(2L, "Game Console", 200.00, "https://via.placeholder.com/200X100?text=2"));
+            productService.save(new Product(3L, "Sofa", 100.00, "https://via.placeholder.com/200X100?text=3"));
+            productService.save(new Product(4L, "Icecream", 5.00, "https://via.placeholder.com/200X100?text=4"));
+            productService.save(new Product(5L, "Beer", 3.00, "https://via.placeholder.com/200X100?text=5"));
+            productService.save(new Product(6L, "Phone", 500.00, "https://via.placeholder.com/200X100?text=6"));
+            productService.save(new Product(7L, "Watch", 30.00, "https://via.placeholder.com/200X100?text=7"));  
             
             basketService.save(new Basket());
             
@@ -44,5 +46,8 @@ public class ECommerceApplication {
         };
     }
     
+
+	
+
 
 }

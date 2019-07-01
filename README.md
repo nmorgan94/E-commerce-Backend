@@ -1,6 +1,6 @@
 # E-commerce demo
 
-This is a mock full-stack e-commerce application using React and Java/Spring Boot.
+A mock full-stack e-commerce application using React and Java/Spring Boot.
 
 This is a work in progress!
 
@@ -14,6 +14,7 @@ Current features:
 
 TODO:
 * Overall look and feel
+* Fix needing to refresh when after login
 * View user details when logged in
 * Error handling
 * Redirect anonymous users to login page when anonymously accessing the checkout

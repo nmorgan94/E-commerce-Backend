@@ -84,7 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                         .permitAll()
-                    .antMatchers("/api/basket/**", "/api/auth/**")
+                    .antMatchers("/api/basket/**", "/api/auth/**", "/basket/add/**")
                         .permitAll()
                     .antMatchers(HttpMethod.GET, "/api/users/**", "/products/**", "/basket/**")
                         .permitAll()
