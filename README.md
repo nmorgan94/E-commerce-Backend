@@ -14,6 +14,7 @@ Current features:
 
 TODO:
 * Overall look and feel
+* Make layout responsive
 * Fix needing to refresh when after login
 * View user details when logged in
 * Error handling
