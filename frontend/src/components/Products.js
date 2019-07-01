@@ -32,7 +32,7 @@ class Products extends Component {
             return(
 
             <div className="card red" key={item.id}>
-                <div className="col s4">
+                <div className="col s12 m4 l2">
                 <Link to={`/products/${item.id}`}>
                         <div className="card-image">
                             <img src={item.pictureUrl} alt={item.name}/>
@@ -52,7 +52,7 @@ class Products extends Component {
         
         <div className="container white">
            <div className="row">
-            <div className="box">
+            <div className="">
                 {listItems}
             </div>
           </div>
