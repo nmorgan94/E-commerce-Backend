@@ -28,31 +28,15 @@ class App extends Component {
       isLoading: false
     }
     this.handleLogout = this.handleLogout.bind(this);
-    this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
  
   }
 
 
-    loadCurrentUser() {
-      getCurrentUser()
-      .then(response => {
-        this.setState({
-          currentUser: response,
-          isAuthenticated: true,
-          isLoading: false
-        });
-      })
-
-      console.log("current user: "+ this.state.currentUser);
-      console.log("isAuthenticated "+ this.state.isAuthenticated);
-    }
 
 componentDidMount() {
     console.log("cookieID", cookies.get('cookieID'));
-    this.loadCurrentUser();
-
-    
+    this.handleLogin();
 }
 
 
@@ -68,8 +52,15 @@ handleLogout() {
 }
 
 handleLogin() {
-  this.loadCurrentUser();
- 
+    getCurrentUser()
+    .then(response => {
+      this.setState({
+        currentUser: response,
+        isAuthenticated: true,
+        isLoading: false
+      });
+    })
+
 }
 
 	
@@ -80,7 +71,6 @@ handleLogin() {
       
         <Navbar isAuthenticated={this.state.isAuthenticated} 
             currentUser={this.state.currentUser} 
-            onLogin={this.handleLogin}
             onLogout={this.handleLogout} />
        
           <Switch>
@@ -88,7 +78,8 @@ handleLogin() {
               <Route path="/basket" component={Basket}/>
               <Route path="/products/:id" component={ProductDetail} />
               <Route path="/checkout" component={Checkout} />
-              <Route path="/login" component={Login} />
+              <Route path="/login" 
+                  render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
               <Route path="/signup" component={Signup} />
             </Switch>
        </div>

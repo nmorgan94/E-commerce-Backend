@@ -33,3 +33,11 @@ export function getCurrentUser() {
         method: 'GET'
     });
 }
+
+export function login(loginRequest) {
+    return request({
+        url: "/api/auth/signin",
+        method: 'POST',
+        body: loginRequest
+    });
+}

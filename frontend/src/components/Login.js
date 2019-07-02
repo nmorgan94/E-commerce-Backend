@@ -4,6 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Input from '@material-ui/core/Input';
 import { Link } from 'react-router-dom'
 import { ACCESS_TOKEN } from '../constants';
+import { login } from '../utils/APIUtils';
 
 console.log("token "+ACCESS_TOKEN);
 
@@ -25,16 +26,11 @@ constructor(props){
     
   const loginRequest = JSON.stringify(this.state);
 
-  fetch(`/api/auth/signin`, {
-      headers: {
-          'Content-Type': 'application/json'
-         
-      },
-      method: 'POST',
-      body: loginRequest
+  login(loginRequest)
+  .then(response => {
+    localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+    this.props.onLogin();
   })
-  .then(response => response.json())
-  .then(result => localStorage.setItem(ACCESS_TOKEN, result.accessToken))
   .then(this.props.history.push(`/`));
 
 }
