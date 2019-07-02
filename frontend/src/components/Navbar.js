@@ -12,6 +12,8 @@ import { ACCESS_TOKEN } from '../constants';
         this.props.onLogout();
     }
 
+
+
 render(){
 
         return(
@@ -20,9 +22,9 @@ render(){
                     <div className="container">
                         <Link to="/" className="brand-logo">e-com</Link>                    
                         <ul className="right">
-                        
+                        <li> {this.props.currentUser ? <span >Hi there {this.props.currentUser.firstName}  </span> : null}	</li>
                         <li> {this.props.currentUser ? <span onClick={this.handleLogout}>logout</span> : <Link to="/login">login</Link> }	</li>
-                            <li><Link to="/basket"><i className="material-icons">shopping_cart</i></Link></li>
+                        <li><Link to="/basket"><i className="material-icons">shopping_cart</i></Link></li>
                         </ul>
                     </div>
                 </div>  

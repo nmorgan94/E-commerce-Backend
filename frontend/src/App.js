@@ -4,6 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Products from './components/Products';
 import Basket from './components/Basket'
+import User from './components/User'
 import Home from './components/Home'
 import Checkout from './components/Checkout'
 import Login from './components/Login'
@@ -81,6 +82,8 @@ handleLogin() {
               <Route path="/login" 
                   render={(props) => <Login onLogin={this.handleLogin} {...props} />}></Route>
               <Route path="/signup" component={Signup} />
+              <Route path="/user" 
+                  render={(props) => <User currentUser={this.state.currentUser} {...props} />}></Route>
             </Switch>
        </div>
  </BrowserRouter>
