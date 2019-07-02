@@ -15,10 +15,10 @@ Current features:
 TODO:
 * Overall look and feel
 * Make layout responsive
-* Fix needing to refresh when after login
+* Fix needing to refresh after login
 * View user details when logged in
 * Error handling
-* Redirect anonymous users to login page when anonymously accessing the checkout
+* Redirect anonymous users to login page when accessing the checkout
 * Test cases
 * Unique cookies for users
 * Combine anonymous basket with authenticated user basket when logging in
