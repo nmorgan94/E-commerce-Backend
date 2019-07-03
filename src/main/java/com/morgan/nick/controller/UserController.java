@@ -48,6 +48,7 @@ public class UserController {
 	    	User user = new User();
 	    	user.setFirstName(currentUser.getFirstName());
 	        return user;
+	    	
 	    }
 		
 	}

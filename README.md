@@ -6,17 +6,19 @@ This is a work in progress!
 
 Current features:
 * Login/logout using JWT
+* Authentication redirection
 * Add to basket
 * Browse basket
 * Browse list of products
 * Dynamically view product details
+* User page
 
 
 TODO:
 * Overall look and feel
 * Make layout responsive
-* Fix needing to refresh after login
-* View user details when logged in
+* Detailed User page
+* Implement MobX
 * Error handling
 * Redirect anonymous users to login page when accessing the checkout
 * Test cases

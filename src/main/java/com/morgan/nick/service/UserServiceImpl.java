@@ -3,6 +3,7 @@ package com.morgan.nick.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.morgan.nick.model.Role;
 import com.morgan.nick.model.User;
 import com.morgan.nick.repository.UserRepository;
 
@@ -26,7 +27,10 @@ public class UserServiceImpl implements UserService{
 		return this.userRepository.save(user);
 	}
 
-
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
 
 
 }

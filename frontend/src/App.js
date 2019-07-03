@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter, Route, Switch, withRouter} from 'react-router-dom'
 import './App.css';
 import Navbar from './components/Navbar';
 import Products from './components/Products';
@@ -13,6 +13,8 @@ import Signup from './components/Signup'
 import Cookies from 'universal-cookie';
 import { ACCESS_TOKEN } from './constants';
 import { getCurrentUser } from './utils/APIUtils';
+import  { Redirect } from 'react-router-dom'
+import { browserHistory } from 'react-router';
 
 const cookies = new Cookies();
 
@@ -24,7 +26,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentUser: null,
+      currentUser: {},
       isAuthenticated: false,
       isLoading: false
     }
@@ -41,14 +43,16 @@ componentDidMount() {
 }
 
 
-handleLogout() {
+handleLogout(redirectTo="/") {
   localStorage.removeItem(ACCESS_TOKEN);
 
   this.setState({
-    currentUser: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    currentUser: null
+  
   });
 
+  this.props.history.push("/");
   
 }
 
@@ -67,7 +71,7 @@ handleLogin() {
 	
   render() {
     return (
-      <BrowserRouter>
+     
       <div className="App">
       
         <Navbar isAuthenticated={this.state.isAuthenticated} 
@@ -86,9 +90,10 @@ handleLogin() {
                   render={(props) => <User currentUser={this.state.currentUser} {...props} />}></Route>
             </Switch>
        </div>
- </BrowserRouter>
+
     );
   }
 }
 
-export default App;
+export default withRouter(App);
+
