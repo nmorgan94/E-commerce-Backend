@@ -1,6 +1,7 @@
 package com.morgan.nick.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +59,38 @@ public class BasketServiceImpl implements BasketService{
 	@Override
 	public void deleteAllBaskets() {
 		basketRepository.deleteAll();
+	}
+	
+	@Override
+	public Basket combineBaskets(long authenticatedBasketId, long anonymousBasketId) {
+		List<BasketItem> authenticatedBasketContents = getBasket(authenticatedBasketId).getBasketContent();
+		List<BasketItem> anonymousBasketContents = getBasket(anonymousBasketId).getBasketContent();
+		
+		List<Long> productIdList = authenticatedBasketContents.stream().map(n -> n.getProduct().getId()).collect(Collectors.toList());
+			
+		for(BasketItem anonymousItem : anonymousBasketContents) {
+			if(productIdList.contains(anonymousItem.getProduct().getId())) {
+				authenticatedBasketContents.forEach(authenticatedItem -> {
+                    if (anonymousItem.getProduct().getId().equals(authenticatedItem.getProduct().getId())) {
+                    	authenticatedItem.setQuantity(authenticatedItem.getQuantity()+anonymousItem.getQuantity());
+                    }
+                    
+                });
+			}
+			else {
+				authenticatedBasketContents.add(anonymousItem);
+			}
+		}
+		
+		
+
+		return getBasket(authenticatedBasketId);
+	}
+	
+	//TODO create get basketItem by Product ID method to simplify combine basket
+	public BasketItem getBasketItemByProductId() {
+		return null;
+		
 	}
 
 }

@@ -57,6 +57,7 @@ render() {
              disableUnderline = {true}
              onChange={this.handleChange}
              />
+            <div className="input-feedback">{}</div>
            <br/>
 
            <Input
@@ -65,6 +66,7 @@ render() {
              disableUnderline = {true}
              onChange={this.handleChange}
              />
+            <div className="input-feedback">{}</div>
             <br/>
 
             <Input
@@ -73,6 +75,7 @@ render() {
              disableUnderline = {true}
              onChange={this.handleChange}
              />
+             <div className="input-feedback">{}</div>
              <br/>
 
             <Input
@@ -82,6 +85,7 @@ render() {
              disableUnderline = {true}
              onChange={this.handleChange}
              />
+             <div className="input-feedback">{}</div>
            <br/>
             
              <RaisedButton label="Register" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>

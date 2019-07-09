@@ -4,6 +4,7 @@ package com.morgan.nick.controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morgan.nick.model.Basket;
@@ -38,6 +39,11 @@ public class BasketController {
     @RequestMapping(value = "basket/baskets/{id}", method = RequestMethod.GET)
     public Basket getProduct(@PathVariable Long id) {
         return basketService.getBasket(id);
+    }
+    
+    @RequestMapping(value = "basket/combineBaskets", method = RequestMethod.PUT)
+    public Basket combineBaskets(@RequestParam Long authenticatedBasketId, @RequestParam Long anonymousBasketId) {
+        return basketService.combineBaskets(authenticatedBasketId, anonymousBasketId);
     }
     
 

@@ -18,6 +18,8 @@ public interface BasketService {
 	 
 	 Basket save(Basket basket);
 	 
+	 Basket combineBaskets(long authenticatedBasketId, long anonymousBasketId);
+	 
 	 void calculateBasketPrice(Basket basket);
 	 
 	 void setBasketContent(Basket basket, List<BasketItem> basketContents);
