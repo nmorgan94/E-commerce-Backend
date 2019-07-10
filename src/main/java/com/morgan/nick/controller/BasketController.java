@@ -40,11 +40,6 @@ public class BasketController {
     public Basket getProduct(@PathVariable Long id) {
         return basketService.getBasket(id);
     }
-    
-    @RequestMapping(value = "basket/combineBaskets", method = RequestMethod.PUT)
-    public Basket combineBaskets(@RequestParam Long authenticatedBasketId, @RequestParam Long anonymousBasketId) {
-        return basketService.combineBaskets(authenticatedBasketId, anonymousBasketId);
-    }
-    
+        
 
 }

@@ -62,9 +62,11 @@ public class BasketServiceImpl implements BasketService{
 	}
 	
 	@Override
-	public Basket combineBaskets(long authenticatedBasketId, long anonymousBasketId) {
-		List<BasketItem> authenticatedBasketContents = getBasket(authenticatedBasketId).getBasketContent();
-		List<BasketItem> anonymousBasketContents = getBasket(anonymousBasketId).getBasketContent();
+	public Basket combineBaskets(Basket authenticatedBasket, Basket anonymousBasket) {
+		List<BasketItem> authenticatedBasketContents = authenticatedBasket.getBasketContent();
+		List<BasketItem> anonymousBasketContents = anonymousBasket.getBasketContent();
+		
+
 		
 		List<Long> productIdList = authenticatedBasketContents.stream().map(n -> n.getProduct().getId()).collect(Collectors.toList());
 			
@@ -73,6 +75,7 @@ public class BasketServiceImpl implements BasketService{
 				authenticatedBasketContents.forEach(authenticatedItem -> {
                     if (anonymousItem.getProduct().getId().equals(authenticatedItem.getProduct().getId())) {
                     	authenticatedItem.setQuantity(authenticatedItem.getQuantity()+anonymousItem.getQuantity());
+
                     }
                     
                 });
@@ -81,15 +84,20 @@ public class BasketServiceImpl implements BasketService{
 				authenticatedBasketContents.add(anonymousItem);
 			}
 		}
-		
-		
-
-		return getBasket(authenticatedBasketId);
+		return authenticatedBasket;
 	}
 	
-	//TODO create get basketItem by Product ID method to simplify combine basket
-	public BasketItem getBasketItemByProductId() {
-		return null;
+	public BasketItem getBasketItemByProductId(List<BasketItem> basketContents, long id) {
+
+		BasketItem basketItem = basketContents.stream()
+				  .filter(item -> id == item.getProduct().getId())
+				  .findAny()
+				  .orElse(null);
+		
+		return basketItem;
+	}
+	
+	public void test(long id) {
 		
 	}
 
