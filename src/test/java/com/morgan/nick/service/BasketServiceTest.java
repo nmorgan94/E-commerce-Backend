@@ -3,6 +3,7 @@ package com.morgan.nick.service;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -16,13 +17,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.morgan.nick.model.Basket;
 import com.morgan.nick.model.BasketItem;
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ServiceTest {
+public class BasketServiceTest {
 	
     @Autowired
     BasketServiceImpl basketServiceImpl;
@@ -48,6 +50,24 @@ public class ServiceTest {
 		assertEquals(1, authBasket.getBasketContent().get(5).getQuantity());
 
 	}
+	
+	@Test
+	public void calculateBasketPriceTest() throws JsonIOException, IOException {
+		Basket anonBasket = gson.fromJson(new FileReader("src/test/resources/anonBasket.json"), Basket.class);
+		
+		assertEquals(503.00, basketServiceImpl.calculateBasketPrice(anonBasket), 0.01);
+		
+	}
+	
+	@Test
+	public void getBasketItemByProductIdTest() throws JsonIOException, IOException {
+		Basket authBasket = gson.fromJson(new FileReader("src/test/resources/authBasket.json"), Basket.class);
+		BasketItem basketItem = basketServiceImpl.getBasketItemByProductId(authBasket.getBasketContent(), 2);
+		
+		assertEquals("Game Console", basketItem.getProduct().getName());
+		
+	}
+	
 
 
 }

@@ -3,6 +3,8 @@ package com.morgan.nick.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.morgan.nick.exception.ResourceNotFoundException;
+import com.morgan.nick.model.Product;
 import com.morgan.nick.model.Role;
 import com.morgan.nick.model.User;
 import com.morgan.nick.repository.UserRepository;
@@ -30,6 +32,13 @@ public class UserServiceImpl implements UserService{
     @Override
     public User save(User user) {
         return userRepository.save(user);
+    }
+    
+    @Override
+    public User getUser(long id) {
+        return userRepository
+          .findById(id)
+          .orElseThrow(() -> new ResourceNotFoundException("User not found"));
     }
 
 

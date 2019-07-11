@@ -25,6 +25,7 @@ import com.morgan.nick.payloads.SignUpRequest;
 import com.morgan.nick.repository.RoleRepository;
 import com.morgan.nick.repository.UserRepository;
 import com.morgan.nick.security.JwtTokenProvider;
+import com.morgan.nick.service.UserService;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -42,6 +43,9 @@ public class AuthController {
 
     @Autowired
     RoleRepository roleRepository;
+    
+    @Autowired
+    UserService userService;
 
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -60,8 +64,10 @@ public class AuthController {
         );
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         String jwt = tokenProvider.generateToken(authentication);
+        
+        Long id = tokenProvider.getUserIdFromJWT(jwt);
+        User user = userService.getUser(id);
         return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
     }
 

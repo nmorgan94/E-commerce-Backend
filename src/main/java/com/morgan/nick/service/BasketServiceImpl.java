@@ -35,14 +35,14 @@ public class BasketServiceImpl implements BasketService{
     }
 
 	@Override
-	public void calculateBasketPrice(Basket basket) {
+	public double calculateBasketPrice(Basket basket) {
 		List<BasketItem> basketContents = basket.getBasketContent();
 		double sum = 0;
 		for(BasketItem basketItem : basketContents) {
 			sum += basketItem.getTotalPrice();
 		}
 		basket.setBasketPrice(sum);
-		
+		return sum;
 	}
 	
 	@Override
@@ -60,30 +60,24 @@ public class BasketServiceImpl implements BasketService{
 	public void deleteAllBaskets() {
 		basketRepository.deleteAll();
 	}
+		
 	
 	@Override
 	public Basket combineBaskets(Basket authenticatedBasket, Basket anonymousBasket) {
 		List<BasketItem> authenticatedBasketContents = authenticatedBasket.getBasketContent();
 		List<BasketItem> anonymousBasketContents = anonymousBasket.getBasketContent();
-		
-
-		
 		List<Long> productIdList = authenticatedBasketContents.stream().map(n -> n.getProduct().getId()).collect(Collectors.toList());
 			
-		for(BasketItem anonymousItem : anonymousBasketContents) {
+		anonymousBasketContents.forEach(anonymousItem ->{
 			if(productIdList.contains(anonymousItem.getProduct().getId())) {
-				authenticatedBasketContents.forEach(authenticatedItem -> {
-                    if (anonymousItem.getProduct().getId().equals(authenticatedItem.getProduct().getId())) {
-                    	authenticatedItem.setQuantity(authenticatedItem.getQuantity()+anonymousItem.getQuantity());
-
-                    }
-                    
-                });
+				BasketItem authenticatedItem = getBasketItemByProductId(authenticatedBasketContents, anonymousItem.getProduct().getId());
+				authenticatedItem.setQuantity(authenticatedItem.getQuantity()+anonymousItem.getQuantity());
 			}
 			else {
 				authenticatedBasketContents.add(anonymousItem);
 			}
-		}
+		});
+		
 		return authenticatedBasket;
 	}
 	

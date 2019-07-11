@@ -19,14 +19,16 @@ public class User {
 	private String password;
 	private String email;
 	
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "basket_id", referencedColumnName = "id")
+	private Basket basket;
+	
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
     
     public User() {
-
+    	this.basket = new Basket();
     }
 	
     
@@ -35,6 +37,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.basket = new Basket();
     }
 
 

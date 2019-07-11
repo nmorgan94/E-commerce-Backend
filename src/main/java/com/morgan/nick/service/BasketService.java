@@ -18,7 +18,7 @@ public interface BasketService {
 	 
 	 Basket save(Basket basket);
 	 
-	 void calculateBasketPrice(Basket basket);
+	 double calculateBasketPrice(Basket basket);
 	 
 	 void setBasketContent(Basket basket, List<BasketItem> basketContents);
 	 

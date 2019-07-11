@@ -62,8 +62,7 @@ public class ECommerceApplication {
             
             
             User user = new User("Nick", "nick94", "nick@morgan.com", passwordEncoder.encode("password"));
-            
-            
+
             Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                     .orElseThrow(() -> new AppException("User Role not set."));
             

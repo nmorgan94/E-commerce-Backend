@@ -10,4 +10,6 @@ public interface UserService {
 	
 	public User save(User user);
 
+	User getUser(long id);
+
 }
