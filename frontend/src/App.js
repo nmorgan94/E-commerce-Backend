@@ -11,6 +11,7 @@ import Login from './components/Login'
 import ProductDetail from './components/ProductDetail'
 import Signup from './components/Signup'
 import ValidatedFormLogin from './components/ValidatedFormLogin'
+import ValidatedSignup from './components/ValidatedSignup'
 import Cookies from 'universal-cookie';
 import { ACCESS_TOKEN } from './constants';
 import { getCurrentUser } from './utils/APIUtils';
@@ -89,6 +90,8 @@ handleLogin() {
               <Route path="/vallogin" 
                   render={(props) => <ValidatedFormLogin {...props} />}></Route>
               <Route path="/signup" component={Signup} />
+              <Route path="/valsignup" 
+                  render={(props) => <ValidatedSignup {...props} />}></Route>
               <Route path="/user" 
                   render={(props) => <User currentUser={this.state.currentUser} {...props} />}></Route>
             </Switch>

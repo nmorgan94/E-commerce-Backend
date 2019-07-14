@@ -53,12 +53,12 @@ const ValidatedLoginForm = (props) => (
           <Input
             name="usernameOrEmail"
             type="text"
-            placeholder="Enter your email"
+            placeholder="Username or Email"
             value={values.usernameOrEmail}
             onChange={handleChange}
             onBlur={handleBlur}
             disableUnderline = {true}
-            className={errors.email && touched.email && "error"}
+            className={errors.usernameOrEmail && touched.usernameOrEmail && "error"}
           />
           {errors.usernameOrEmail && touched.usernameOrEmail && (
             <div className="input-feedback">{errors.usernameOrEmail}</div>
@@ -67,7 +67,7 @@ const ValidatedLoginForm = (props) => (
           <Input
             name="password"
             type="password"
-            placeholder="Enter your password"
+            placeholder="Password"
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -79,7 +79,7 @@ const ValidatedLoginForm = (props) => (
           )}
         <br/>
         <br/>
-          <button class="btn waves-effect waves-light" type="submit" disabled={isSubmitting}>
+          <button class="btn waves-effect waves-light" type="submit">
             Login
           </button>
 
