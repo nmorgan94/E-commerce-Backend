@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Input from '@material-ui/core/Input';
+import { Redirect } from 'react-router-dom'
 
 class Signup extends Component {
 constructor(props){

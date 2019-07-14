@@ -59,8 +59,7 @@ public class ECommerceApplication {
             
             roleService.save(new Role(RoleName.ROLE_USER));
             roleService.save(new Role(RoleName.ROLE_ADMIN));
-            
-            
+              
             User user = new User("Nick", "nick94", "nick@morgan.com", passwordEncoder.encode("password"));
 
             Role userRole = roleRepository.findByName(RoleName.ROLE_USER)

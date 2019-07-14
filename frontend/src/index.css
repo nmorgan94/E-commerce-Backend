@@ -16,3 +16,9 @@ code {
 ul li {
   margin: 0 4px ;
 }
+
+.input-feedback {
+  color: red;
+
+}
+

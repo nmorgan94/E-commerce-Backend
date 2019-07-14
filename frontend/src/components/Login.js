@@ -5,6 +5,9 @@ import Input from '@material-ui/core/Input';
 import { Link } from 'react-router-dom'
 import { ACCESS_TOKEN } from '../constants';
 import { login } from '../utils/APIUtils';
+import { Formik } from "formik";
+import * as EmailValidator from "email-validator";
+import * as Yup from "yup";
 
 console.log("token "+ACCESS_TOKEN);
 
@@ -45,8 +48,17 @@ handleChange (evt) {
 
 
 render() {
+
     return (
-      <div>
+      <Formik
+  initialValues={{ email: "", password: "" }}
+  onSubmit={(values, { setSubmitting }) => {
+    setTimeout(() => {
+      console.log("Logging in", values);
+      setSubmitting(false);
+    }, 500);
+  }}
+>
         <MuiThemeProvider>
           <div>
 
@@ -71,7 +83,7 @@ render() {
              <RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)}/>
          </div>
          </MuiThemeProvider>
-      </div>
+      </Formik>
     );
   }
 }
