@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
@@ -9,25 +9,39 @@ import Input from '@material-ui/core/Input';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 
-function handleErrors(response) {
+class ValidatedSignup extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      userNameExists: false,
+      emailExists: false
+    }
+  }
+
+  handleErrors = (response) => {
   
     console.log("Error"+response.message)
     if(response.message == "Username is already taken!"){
-      usernameExists=true;
-      console.log(usernameExists)
+      this.setState({
+        usernameExists: true
+      });
     } else{
-      usernameExists=false;
+      this.setState({
+        usernameExists: false
+      });
     }
 
-}
-let usernameExists = false;
-let emailExists = false;
+};
 
 
-const ValidatedSignup = (props) => (
+  render() {
+    return (
+        
   <Formik
-    initialValues={{name: "", username: "", email: "", password: "" }}
-    onSubmit={(values) => {
+    initialValues={{
+      name: "", username: "", email: "", password: "" 
+    }}
+    onSubmit= {(values) => {
       const signupRequest = JSON.stringify(values);
 
       fetch(`/api/auth/signup`, {
@@ -37,8 +51,9 @@ const ValidatedSignup = (props) => (
           method: 'POST',
           body: signupRequest
       }).then(res => res.json())
-      .then(handleErrors);
-    }}
+      .then(this.handleErrors);
+    }
+  }
 
 
     validationSchema={Yup.object().shape({
@@ -56,25 +71,13 @@ const ValidatedSignup = (props) => (
         .oneOf([Yup.ref('password'), null], "Passwords must match")
         .required('Password confirm is required')
 
-    })}
-  >
-    {props => {
-      const {
-        values,
-        touched,
-        errors,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit
+    }
+    )
+  }
 
-      } = props;
-
-      return (
-
-        
+        render={({ errors, touched, handleSubmit, values, handleChange, handleBlur}) => (
         <MuiThemeProvider>
-            <div>
+        <div>
         <form onSubmit={handleSubmit}>
         <br/>
         <Input
@@ -90,7 +93,7 @@ const ValidatedSignup = (props) => (
           {errors.name && touched.name && (
             <div className="input-feedback">{errors.name}</div>
           )}
-<br/>
+        <br/>
         <Input
             name="username"
             type="text"
@@ -105,7 +108,7 @@ const ValidatedSignup = (props) => (
             <div className="input-feedback">{errors.username}</div>
           )} 
 
-          {usernameExists == true && 
+          {this.state.usernameExists == true && 
           <div className="input-feedback">Username already exsists</div>
           }
          
@@ -157,14 +160,16 @@ const ValidatedSignup = (props) => (
             Register
           </button>
 
-
-
         </form>
         </div>
         </MuiThemeProvider>
-      );
-    }}
-  </Formik>
-);
+      
+      )}
+      />
+  )
+}
+}
+
+  
 
 export default ValidatedSignup;
