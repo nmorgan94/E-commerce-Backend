@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
@@ -9,18 +9,57 @@ import Input from '@material-ui/core/Input';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const ValidatedLoginForm = (props) => (
+class ValidatedLoginForm extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      badCredentials: false,
+
+    }
+  }
+
+
+  handleErrors = (response) => {
+  
+    if(response.message == "Bad credentials"){
+      this.setState({
+        badCredentials: true
+      });
+    } 
+    else{
+      this.setState({
+        badCredentials: false
+      });
+      this.props.history.push(`/`);
+    }
+
+};
+
+
+  render() {
+    return (
+        
+
   <Formik
-    initialValues={{ usernameOrEmail: "", password: "" }}
+    initialValues={{ 
+      usernameOrEmail: "", password: "" 
+    }}
     onSubmit={(values) => {
         const loginRequest = JSON.stringify(values);
 
         login(loginRequest)
         .then(response => {
           localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-        })
-        .then(props.history.push(`/`));
-    }}
+          this.props.history.push(`/`);
+        }).catch(error => {
+          if(error.status === 401) {
+              this.setState({
+                badCredentials: true
+              });
+            } 
+          })
+  }
+}
 
 
     validationSchema={Yup.object().shape({
@@ -28,21 +67,11 @@ const ValidatedLoginForm = (props) => (
         .required("Required"),
       password: Yup.string()
         .required("No password provided.")
-        .min(8, "Password is too short - should be 8 chars minimum.")
-       // .matches(/(?=.*[0-9])/, "Password must contain a number.")
+
     })}
-  >
-    {props => {
-      const {
-        values,
-        touched,
-        errors,
-        isSubmitting,
-        handleChange,
-        handleBlur,
-        handleSubmit
-      } = props;
-      return (
+  
+ 
+      render={({ errors, touched, handleSubmit, values, handleChange, handleBlur}) => (
         <MuiThemeProvider>
             <div>
         <form onSubmit={handleSubmit}>
@@ -78,7 +107,14 @@ const ValidatedLoginForm = (props) => (
             <div className="input-feedback">{errors.password}</div>
           )}
         <br/>
+
+        {this.state.badCredentials == true && 
+          <div className="input-feedback">Incorrect username or password</div>
+        }
         <br/>
+
+
+
           <button class="btn waves-effect waves-light" type="submit">
             Login
           </button>
@@ -86,9 +122,12 @@ const ValidatedLoginForm = (props) => (
         </form>
         </div>
         </MuiThemeProvider>
-      );
-    }}
-  </Formik>
-);
+    
+
+    )} 
+  />
+  )
+}
+}
 
 export default ValidatedLoginForm;

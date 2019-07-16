@@ -23,11 +23,20 @@ class ValidatedSignup extends Component{
     console.log("Error"+response.message)
     if(response.message == "Username is already taken!"){
       this.setState({
-        usernameExists: true
+        usernameExists: true,
+        emailExists: false
       });
-    } else{
+    } 
+    if(response.message == "Email is already taken!"){
       this.setState({
-        usernameExists: false
+        usernameExists: false,
+        emailExists: true
+      });
+    } 
+    else{
+      this.setState({
+        usernameExists: false,
+        emailExists: false
       });
     }
 
@@ -140,6 +149,10 @@ class ValidatedSignup extends Component{
           {errors.password && touched.password && (
             <div className="input-feedback">{errors.password}</div>
           )}
+
+          {this.state.emailExists == true && 
+          <div className="input-feedback">Email already exsists</div>
+          }
           <br/>
           <Input
             name="passwordConfirm"
