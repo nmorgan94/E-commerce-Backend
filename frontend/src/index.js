@@ -7,11 +7,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'mobx-react';
 import Store from './store/Store';
 
-const store = Store();
+
 
 ReactDOM.render(
 
-    <Provider store={store}>
+    <Provider store={Store}>
         <Router>
             <App />
         </Router>

@@ -17,13 +17,14 @@ import { ACCESS_TOKEN } from './constants';
 import { getCurrentUser } from './utils/APIUtils';
 import  { Redirect } from 'react-router-dom'
 import { browserHistory } from 'react-router';
+import { observer, inject } from 'mobx-react';
 
 const cookies = new Cookies();
 
 
 cookies.set('cookieID', '1', { path: '/' });
 
-
+@inject("store")
 class App extends Component {
   constructor(props) {
     super(props);
