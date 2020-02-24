@@ -13,11 +13,14 @@ class ValidatedLoginForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      badCredentials: false,
-
+      badCredentials: false
+      
     }
   }
 
+  handleLogin = () => {
+    this.props.onLogin();
+  };
 
   handleErrors = (response) => {
   
@@ -36,6 +39,8 @@ class ValidatedLoginForm extends Component{
 };
 
 
+
+
   render() {
     return (
         
@@ -50,8 +55,10 @@ class ValidatedLoginForm extends Component{
         login(loginRequest)
         .then(response => {
           localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+          this.handleLogin();
           this.props.history.push(`/`);
         }).catch(error => {
+          console.log(error)
           if(error.status === 401) {
               this.setState({
                 badCredentials: true

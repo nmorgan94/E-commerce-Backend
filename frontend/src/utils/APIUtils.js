@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN } from '../constants';
+import { API_BASE_URL } from '../constants';
 
 const request = (options) => {
     const headers = new Headers({
@@ -23,21 +24,38 @@ const request = (options) => {
     );
 };
 
-export function getCurrentUser() {
+export const getCurrentUser = () => {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
 
     return request({
-        url: "/user/me",
+        url: API_BASE_URL+"/user/me",
         method: 'GET'
     });
 }
 
-export function login(loginRequest) {
+export const login = (loginRequest) => {
     return request({
-        url: "/api/auth/signin",
+        url:  API_BASE_URL+"/api/auth/signin",
         method: 'POST',
         body: loginRequest
     });
 }
+
+export const signup = (signupRequest) => {
+    return request({
+        url:  API_BASE_URL+"/api/auth/signup",
+        method: 'POST',
+        body: signupRequest
+    });
+}
+
+export const getAllProducts = () => {
+    return request({
+        url: API_BASE_URL+"/products",
+        method: 'GET'
+    });
+}
+
+

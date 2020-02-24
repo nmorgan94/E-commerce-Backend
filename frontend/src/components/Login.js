@@ -22,7 +22,6 @@ constructor(props){
         value: ''
     }
   }
-  this.handleChange = this.handleChange.bind(this);
 }
 
  handleClick = (event) => {  
@@ -42,7 +41,7 @@ setLocalStorage = (result, key) => {
   localStorage.setItem(result, key);
 };
 
-handleChange (evt) {
+handleChange = (evt) => {
   this.setState({ [evt.target.name]: evt.target.value });
 }
 

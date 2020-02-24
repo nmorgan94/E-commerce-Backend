@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Input from '@material-ui/core/Input';
+import {API_BASE_URL} from '../constants';
 
 
 class Signup extends Component {
@@ -21,7 +22,6 @@ constructor(props){
         value: ''
     }
   }
-this.handleChange = this.handleChange.bind(this);
 }
 
 
@@ -31,7 +31,7 @@ handleClick = (event) => {
     
     const signupRequest = JSON.stringify(this.state);
 
-    fetch(`/api/auth/signup`, {
+    fetch(API_BASE_URL+`/api/auth/signup`, {
         headers: {
             'Content-Type': 'application/json',
         },
@@ -41,7 +41,7 @@ handleClick = (event) => {
  
 }
 
-handleChange (evt) {
+handleChange = (evt) => {
      this.setState({ [evt.target.name]: evt.target.value });
   }
 

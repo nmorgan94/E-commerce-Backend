@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import { Redirect } from 'react-router-dom'
+import {API_BASE_URL} from '../constants';
 
 const cookies = new Cookies();
 
@@ -14,7 +15,7 @@ class ProductDetail extends Component {
     }
 
     getProductDetail = (id) => {
-        fetch(`/products/${id}`)
+        fetch(API_BASE_URL+`/products/${id}`)
         .then(response => {
             return response.json();
         }).then(data =>{
@@ -32,7 +33,7 @@ class ProductDetail extends Component {
 
     handleClick = (event) => {
         let {id} = this.state.id;
-        fetch(`/basket/add/${id}`, {
+        fetch(API_BASE_URL+`/basket/add/${id}`, {
             method: 'POST'
         })
 

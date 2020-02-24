@@ -11,7 +11,7 @@ class User extends Component {
           }
     }
 
-   componentDidMount(){
+   componentDidMount = () => {
     getCurrentUser()
     .then(response => {
       this.setState({

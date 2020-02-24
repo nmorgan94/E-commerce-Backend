@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom'
+import {API_BASE_URL} from '../constants';
 
 const cookies = new Cookies();
 
@@ -21,8 +22,9 @@ class Basket extends Component {
 
     getBasket = () => {
         let id = cookies.get('cookieID');
-        fetch(`/basket/baskets/${id}`)
+        fetch(API_BASE_URL+`/basket/baskets/${id}`)
         .then(response => {
+            console.log(API_BASE_URL);
             return response.json();
         }).then(data =>{
             this.setState({

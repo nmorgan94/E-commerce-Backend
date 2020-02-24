@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import { Formik } from "formik";
 import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
-import { login } from '../utils/APIUtils';
+import { signup } from '../utils/APIUtils';
 import { ACCESS_TOKEN } from '../constants';
 import { Link } from 'react-router-dom'
+import {API_BASE_URL} from '../constants';
 import Input from '@material-ui/core/Input';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -20,25 +21,20 @@ class ValidatedSignup extends Component{
 
   handleErrors = (response) => {
   
-    console.log("Error"+response.message)
     if(response.message == "Username is already taken!"){
+      console.log("ping")
       this.setState({
-        usernameExists: true,
-        emailExists: false
+        usernameExists: true
       });
+      console.log("ping"+ this.state.usernameExists);
+      
     } 
     if(response.message == "Email is already taken!"){
       this.setState({
-        usernameExists: false,
         emailExists: true
       });
     } 
-    else{
-      this.setState({
-        usernameExists: false,
-        emailExists: false
-      });
-    }
+
 
 };
 
@@ -52,15 +48,19 @@ class ValidatedSignup extends Component{
     }}
     onSubmit= {(values) => {
       const signupRequest = JSON.stringify(values);
+      this.setState({
+        usernameExists: false,
+        emailExists: false
+      });
 
-      fetch(`/api/auth/signup`, {
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          method: 'POST',
-          body: signupRequest
-      }).then(res => res.json())
-      .then(this.handleErrors);
+      
+      signup(signupRequest)
+      .then(response =>{
+        this.props.history.push(`/login`);
+      }).catch(error => {
+        console.log("caught");
+        this.handleErrors(error)
+      })
     }
   }
 
@@ -172,6 +172,7 @@ class ValidatedSignup extends Component{
           <button className="btn waves-effect waves-light" type="submit" >
             Register
           </button>
+
 
         </form>
         </div>

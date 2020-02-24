@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom'
+import {API_BASE_URL} from '../constants';
+
 
 class Products extends Component {
     constructor() {
@@ -12,8 +14,9 @@ class Products extends Component {
 
 
     getProducts = () => {
-        fetch('/products')
+        fetch(API_BASE_URL+'/products')
         .then(response => {
+            console.log(API_BASE_URL);
             return response.json();
         }).then(data =>{
             this.setState({products: data});
