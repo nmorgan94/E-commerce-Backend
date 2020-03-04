@@ -19,31 +19,31 @@ import com.morgan.nick.service.ProductService;
 
 @RestController
 public class BasketItemController {
-	
-    private BasketItemService basketItemService;
-    
+
+	private BasketItemService basketItemService;
+
 	@Autowired
 	private BasketService basketService;
-	
+
 	@Autowired
 	private ProductService productService;
 
-    public BasketItemController(BasketItemService basketItemService) {
-        this.basketItemService = basketItemService;
-    }
-	
+	public BasketItemController(BasketItemService basketItemService) {
+		this.basketItemService = basketItemService;
+	}
+
 	@RequestMapping(value = "/basket/add/{productId}", method = RequestMethod.POST)
-		public Basket addBasketItem(@PathVariable(value = "productId") long productId) {
-		
+	public Basket addBasketItem(@PathVariable(value = "productId") long productId) {
+
 		Basket basket = basketService.getBasket(1);
 		List<BasketItem> basketContents = basket.getBasketContent();
 		Product product = productService.getProduct(productId);
-		
+
 		for (int i = 0; i < basketContents.size(); i++) {
 			BasketItem basketItem = basketContents.get(i);
 			if (product.getId().equals(basketItem.getProduct().getId())) {
 				System.out.println("Product exsists");
-				basketItem.setQuantity(basketItem.getQuantity() +1);
+				basketItem.setQuantity(basketItem.getQuantity() + 1);
 				basketItem.setTotalPrice(basketItemService.calculateTotalPrice(basketItem));
 				basketService.calculateBasketPrice(basket);
 				return basket;
@@ -60,7 +60,5 @@ public class BasketItemController {
 		return basket;
 
 	}
-	
 
 }
-

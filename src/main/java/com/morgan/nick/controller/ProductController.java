@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.morgan.nick.model.Product;
 import com.morgan.nick.service.ProductService;
 
-
 @RestController
 public class ProductController {
 
@@ -25,12 +24,10 @@ public class ProductController {
     public @NotNull Iterable<Product> getProducts() {
         return productService.getAllProducts();
     }
-    
+
     @RequestMapping(value = "/products/{id}", method = RequestMethod.GET)
     public Product getProduct(@PathVariable Long id) {
         return productService.getProduct(id);
     }
-    
-    
-    
+
 }

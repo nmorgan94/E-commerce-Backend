@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.morgan.nick.model.Basket;
 
-public interface BasketRepository extends CrudRepository<Basket, Long>{
+public interface BasketRepository extends CrudRepository<Basket, Long> {
 
 }

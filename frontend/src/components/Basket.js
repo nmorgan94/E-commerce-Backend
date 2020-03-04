@@ -1,93 +1,72 @@
 import React, { Component } from "react";
-import Cookies from 'universal-cookie';
-import { Link } from 'react-router-dom'
-import {API_BASE_URL} from '../constants';
+import Cookies from "universal-cookie";
+import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../constants";
+import { observer, inject } from "mobx-react";
 
 const cookies = new Cookies();
 
+@inject("dataStore")
+@observer
 class Basket extends Component {
-    constructor() {
-        super();
-        this.state = {    
-            basket: {},
-            basketContents: []
-        };
+  constructor() {
+    super();
+  }
 
-    }
+  componentDidMount() {
+    this.getBasket();
+  }
 
-    componentDidMount() {
-        this.getBasket();
-    }
+  getBasket = () => {
+    let id = cookies.get("cookieID");
+    fetch(API_BASE_URL + `/basket/baskets/${id}`)
+      .then(response => {
+        console.log(API_BASE_URL);
+        return response.json();
+      })
+      .then(data => {
+        this.props.dataStore.basket = data;
+        this.props.dataStore.basketContents = data.basketContent;
+      });
+  };
 
+  render() {
+    const basket = this.props.dataStore.basket;
+    const basketContent = this.props.dataStore.basketContents;
+    console.log("bc: ", basketContent);
 
-    getBasket = () => {
-        let id = cookies.get('cookieID');
-        fetch(API_BASE_URL+`/basket/baskets/${id}`)
-        .then(response => {
-            console.log(API_BASE_URL);
-            return response.json();
-        }).then(data =>{
-            this.setState({
-                basket: data,
-                basketContents: data.basketContent
-            });
-        });
-        
-    }
+    let subTotal = basket.basketPrice;
 
-    render(){
-        const basket = this.state.basket;
-        const basketContent = this.state.basketContents;
-        console.log("bc: ", basketContent);
+    let listItems = basketContent.map(item => {
+      console.log("item: ", item.product.id);
 
-        let subTotal =  basket.basketPrice;
-
-        let listItems = basketContent.map(item=>{
-
-            console.log("item: ",item.product.id);
-
-            return(
-            
-
-            <div className="card red" key={item.product.id}>
-                <div className="">
-                
-                        <div className="card-image">
-                            <img src={item.product.pictureUrl} alt={item.product.name}/>
-                            <span className="card-title">{item.product.name}</span>
-                        </div>
-                        <div className="card-content row white">
-                            <div className = "col s6">
-                                <b>Price: £{item.product.price}</b> 
-                            </div>
-                            <div className = "col s6">
-                                <b>Quantity: {item.quantity}</b> 
-                            </div>
-                        </div>
-                        
-                </div>
+      return (
+        <div className="card red" key={item.product.id}>
+          <div className="">
+            <div className="card-image">
+              <img src={item.product.pictureUrl} alt={item.product.name} />
+              <span className="card-title">{item.product.name}</span>
             </div>
-
-            )
-        })
-    
-        return (
-        
-        <div className="container grey">
-          
-            <div className="box">
-                {listItems}
-                
+            <div className="card-content row white">
+              <div className="col s6">
+                <b>Price: £{item.product.price}</b>
+              </div>
+              <div className="col s6">
+                <b>Quantity: {item.quantity}</b>
+              </div>
             </div>
-            <div className="">
-                Subtotal: £{subTotal}
-                
-            </div>
-         
+          </div>
         </div>
-        );
-    }
+      );
+    });
 
+    return (
+      <div className="container grey">
+        <div className="box">{listItems}</div>
+        <div className="">Subtotal: £{subTotal}</div>
+      </div>
+    );
+  }
 }
 
 export default Basket;

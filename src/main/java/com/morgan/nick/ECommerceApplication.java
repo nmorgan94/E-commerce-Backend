@@ -24,28 +24,26 @@ import com.morgan.nick.service.ProductService;
 import com.morgan.nick.service.RoleService;
 import com.morgan.nick.service.UserService;
 
-
 @SpringBootApplication
 public class ECommerceApplication {
-	
+
     @Autowired
     PasswordEncoder passwordEncoder;
-    
+
     @Autowired
     RoleRepository roleRepository;
 
     @Autowired
     UserRepository userRepository;
-    
-	public static void main(String[] args) {
-		SpringApplication.run(ECommerceApplication.class, args);
 
-	}
-	
-	
-	
+    public static void main(String[] args) {
+        SpringApplication.run(ECommerceApplication.class, args);
+
+    }
+
     @Bean
-    CommandLineRunner runner(ProductService productService, BasketService basketService, RoleService roleService, UserService userService) {
+    CommandLineRunner runner(ProductService productService, BasketService basketService, RoleService roleService,
+            UserService userService) {
         return args -> {
             productService.save(new Product(1L, "TV Set", 300.00, "https://via.placeholder.com/200X100?text=1"));
             productService.save(new Product(2L, "Game Console", 200.00, "https://via.placeholder.com/200X100?text=2"));
@@ -53,27 +51,22 @@ public class ECommerceApplication {
             productService.save(new Product(4L, "Icecream", 5.00, "https://via.placeholder.com/200X100?text=4"));
             productService.save(new Product(5L, "Beer", 3.00, "https://via.placeholder.com/200X100?text=5"));
             productService.save(new Product(6L, "Phone", 500.00, "https://via.placeholder.com/200X100?text=6"));
-            productService.save(new Product(7L, "Watch", 30.00, "https://via.placeholder.com/200X100?text=7"));  
-            
+            productService.save(new Product(7L, "Watch", 30.00, "https://via.placeholder.com/200X100?text=7"));
+
             basketService.save(new Basket());
-            
+
             roleService.save(new Role(RoleName.ROLE_USER));
             roleService.save(new Role(RoleName.ROLE_ADMIN));
-              
+
             User user = new User("Nick", "nick94", "nick@morgan.com", passwordEncoder.encode("password"));
 
             Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
                     .orElseThrow(() -> new AppException("User Role not set."));
-            
+
             user.setRoles(Collections.singleton(userRole));
             userService.save(user);
-            
-            
+
         };
     }
-    
-
-	
-
 
 }
