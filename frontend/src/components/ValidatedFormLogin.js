@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
-import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { login } from "../utils/APIUtils";
 import { ACCESS_TOKEN } from "../constants";
 import { Link } from "react-router-dom";
 import Input from "@material-ui/core/Input";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import RaisedButton from "material-ui/RaisedButton";
 import { observer, inject } from "mobx-react";
 
 @inject("dataStore")
@@ -18,7 +16,7 @@ class ValidatedLoginForm extends Component {
   }
 
   handleErrors = response => {
-    if (response.message == "Bad credentials") {
+    if (response.message === "Bad credentials") {
       this.props.dataStore.badCredentials = true;
     } else {
       this.props.dataStore.badCredentials = false;

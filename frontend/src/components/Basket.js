@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
-import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
 import { observer, inject } from "mobx-react";
 
@@ -31,13 +30,9 @@ class Basket extends Component {
   };
 
   render() {
-    const basket = this.props.dataStore.basket;
-    const basketContent = this.props.dataStore.basketContents;
-    console.log("bc: ", basketContent);
+    let subTotal = this.props.dataStore.basket.basketPrice;
 
-    let subTotal = basket.basketPrice;
-
-    let listItems = basketContent.map(item => {
+    let listItems = this.props.dataStore.basketContents.map(item => {
       console.log("item: ", item.product.id);
 
       return (

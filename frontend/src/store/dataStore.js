@@ -1,13 +1,15 @@
+import React, { useState, useEffect } from "react";
 import { observable, computed, action, configure } from "mobx";
 import { getCurrentUser } from "../utils/APIUtils";
 import { ACCESS_TOKEN } from "../constants";
-import { useHistory } from "react-router";
+import { API_BASE_URL } from "../constants";
+import Cookies from "universal-cookie";
 
 //configure({ enforceActions: 'observed' })
 
-class DataStore {
-  //const history = useHistory();
+const cookies = new Cookies();
 
+class DataStore {
   @observable isAuthenticated = false;
 
   @observable currentUser = {};
@@ -43,11 +45,26 @@ class DataStore {
     });
   };
 
-  @action handleLogout = () => {
+  @action handleLogoutState = () => {
     localStorage.removeItem(ACCESS_TOKEN);
     this.isAuthenticated = false;
     this.currentUser = {};
-    //history.push("/");
+  };
+
+  @action getBasket = () => {
+    useEffect(() => {
+      let id = cookies.get("cookieID");
+      fetch(API_BASE_URL + `/basket/baskets/${id}`)
+        .then(response => {
+          console.log(API_BASE_URL);
+          return response.json();
+        })
+        .then(data => {
+          console.log(data);
+          this.basket = data;
+          this.basketContents = data.basketContent;
+        });
+    }, []);
   };
 }
 

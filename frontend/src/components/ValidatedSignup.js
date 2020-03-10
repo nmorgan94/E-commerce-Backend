@@ -1,14 +1,8 @@
 import React, { Component } from "react";
 import { Formik } from "formik";
-import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { signup } from "../utils/APIUtils";
-import { ACCESS_TOKEN } from "../constants";
-import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../constants";
 import Input from "@material-ui/core/Input";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import RaisedButton from "material-ui/RaisedButton";
 import { observer, inject } from "mobx-react";
 
 @inject("dataStore")

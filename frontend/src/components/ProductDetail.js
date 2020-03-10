@@ -19,6 +19,7 @@ class ProductDetail extends Component {
         return response.json();
       })
       .then(data => {
+        console.log("data: " + data);
         this.props.dataStore.productDetail = data;
       })
       .catch(() => console.log("Products api call failed"));
@@ -33,7 +34,12 @@ class ProductDetail extends Component {
     let { id } = this.props.match.params;
     fetch(API_BASE_URL + `/basket/add/${id}`, {
       method: "POST"
-    }).catch(() => console.log("Add to basket api call failed"));
+    })
+      .then(data => {
+        console.log("data in basket: " + data.json());
+        this.props.dataStore.basket = data;
+      })
+      .catch(() => console.log("Add to basket api call failed"));
 
     this.props.history.push(`/basket`);
   };

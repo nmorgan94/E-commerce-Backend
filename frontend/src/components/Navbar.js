@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { browserHistory } from "react-router";
 import { observer, inject } from "mobx-react";
+import { useHistory } from "react-router-dom";
 
-@inject("dataStore")
-@observer
-class Navbar extends Component {
-  constructor(props) {
-    super(props);
-  }
+export const Navbar = inject("dataStore")(
+  observer(({ dataStore }) => {
+    let history = useHistory();
 
-  handleLogout = () => {
-    this.props.onLogout();
-  };
+    const handleLogout = () => {
+      dataStore.handleLogoutState();
+      history.push("/");
+    };
 
-  render() {
     return (
       <nav>
         <div className="nav-wrapper blue-grey">
@@ -24,16 +23,14 @@ class Navbar extends Component {
             <ul className="right">
               <li>
                 {" "}
-                {this.props.dataStore.isAuthenticated ? (
-                  <span>
-                    Hi there {this.props.dataStore.currentUser.firstName}{" "}
-                  </span>
+                {dataStore.isAuthenticated ? (
+                  <span>Hi there {dataStore.currentUser.firstName} </span>
                 ) : null}{" "}
               </li>
               <li>
                 {" "}
-                {this.props.dataStore.isAuthenticated ? (
-                  <span onClick={this.handleLogout}>logout</span>
+                {dataStore.isAuthenticated ? (
+                  <span onClick={handleLogout}>logout</span>
                 ) : (
                   <Link to="/login">login</Link>
                 )}{" "}
@@ -48,7 +45,5 @@ class Navbar extends Component {
         </div>
       </nav>
     );
-  }
-}
-
-export default Navbar;
+  })
+);
