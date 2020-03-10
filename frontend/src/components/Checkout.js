@@ -9,45 +9,24 @@ import { AddressDetails } from "./AddressDetails";
 import { BasketDetails } from "./BasketDetails";
 import Box from "@material-ui/core/Box";
 
-const SignupSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required")
-});
-
-class Checkout extends Component {
-  constructor(props) {
-    super(props);
+export const Checkout = () => {
+  const isLogged = localStorage.getItem(ACCESS_TOKEN);
+  console.log("logged: " + isLogged);
+  if (!isLogged) {
+    return <Redirect to="/basket" />;
   }
+  return (
+    <div>
+      <h1>Checkout</h1>
 
-  componentWillUnmount() {}
-
-  render() {
-    const isLogged = localStorage.getItem(ACCESS_TOKEN);
-    console.log("logged: " + isLogged);
-    if (!isLogged) {
-      return <Redirect to="/basket" />;
-    }
-    return (
-      <div>
-        <h1>Checkout</h1>
-
-        <div className="row">
-          <div className="col s3 ">
-            <BasketDetails />
-          </div>
-          <div className="col s9 ">
-            <AddressDetails />
-          </div>
+      <div className="row">
+        <div className="col s3 ">
+          <BasketDetails />
+        </div>
+        <div className="col s9 ">
+          <AddressDetails />
         </div>
       </div>
-    );
-  }
-}
-
-export default Checkout;
+    </div>
+  );
+};

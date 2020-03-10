@@ -5,7 +5,7 @@ import { Navbar } from "./components/Navbar";
 import Basket from "./components/Basket";
 import User from "./components/User";
 import { Home } from "./components/Home";
-import Checkout from "./components/Checkout";
+import { Checkout } from "./components/Checkout";
 import ProductDetail from "./components/ProductDetail";
 import ValidatedFormLogin from "./components/ValidatedFormLogin";
 import ValidatedSignup from "./components/ValidatedSignup";
