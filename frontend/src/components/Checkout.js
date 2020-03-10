@@ -3,9 +3,23 @@ import { getCurrentUser } from "../utils/APIUtils";
 import { Redirect } from "react-router-dom";
 import { ACCESS_TOKEN } from "../constants";
 import { observer, inject } from "mobx-react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { AddressDetails } from "./AddressDetails";
+import { BasketDetails } from "./BasketDetails";
+import Box from "@material-ui/core/Box";
 
-@inject("dataStore")
-@observer
+const SignupSchema = Yup.object().shape({
+  firstName: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required"),
+  lastName: Yup.string()
+    .min(2, "Too Short!")
+    .max(50, "Too Long!")
+    .required("Required")
+});
+
 class Checkout extends Component {
   constructor(props) {
     super(props);
@@ -20,8 +34,17 @@ class Checkout extends Component {
       return <Redirect to="/basket" />;
     }
     return (
-      <div className="container">
-        <h3>Checkout</h3>
+      <div>
+        <h1>Checkout</h1>
+
+        <div className="row">
+          <div className="col s3 ">
+            <BasketDetails />
+          </div>
+          <div className="col s9 ">
+            <AddressDetails />
+          </div>
+        </div>
       </div>
     );
   }

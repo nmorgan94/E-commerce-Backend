@@ -37,7 +37,8 @@ class ValidatedSignup extends Component {
           name: "",
           username: "",
           email: "",
-          password: ""
+          password: "",
+          passwordConfirm: ""
         }}
         onSubmit={values => {
           const signupRequest = JSON.stringify(values);
@@ -66,108 +67,100 @@ class ValidatedSignup extends Component {
             .oneOf([Yup.ref("password"), null], "Passwords must match")
             .required("Password confirm is required")
         })}
-        render={({
-          errors,
-          touched,
-          handleSubmit,
-          values,
-          handleChange,
-          handleBlur
-        }) => (
-          <MuiThemeProvider>
-            <div>
-              <form onSubmit={handleSubmit}>
-                <br />
-                <Input
-                  name="name"
-                  type="text"
-                  placeholder="Name"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disableUnderline={true}
-                  className={errors.name && touched.name && "error"}
-                />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
-                )}
-                <br />
-                <Input
-                  name="username"
-                  type="text"
-                  placeholder="Username"
-                  value={values.username}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disableUnderline={true}
-                  className={errors.username && touched.username && "error"}
-                />
-                {errors.username && touched.username && (
-                  <div className="input-feedback">{errors.username}</div>
-                )}
+      >
+        {({ values, errors, touched, handleChange, handleBlur }) => (
+          <div>
+            <form>
+              <br />
+              <Input
+                name="name"
+                type="text"
+                placeholder="Name"
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disableUnderline={true}
+                className={errors.name && touched.name && "error"}
+              />
+              {errors.name && touched.name && (
+                <div className="input-feedback">{errors.name}</div>
+              )}
+              <br />
+              <Input
+                name="username"
+                type="text"
+                placeholder="Username"
+                value={values.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disableUnderline={true}
+                className={errors.username && touched.username && "error"}
+              />
+              {errors.username && touched.username && (
+                <div className="input-feedback">{errors.username}</div>
+              )}
 
-                {this.props.dataStore.usernameExists === true && (
-                  <div className="input-feedback">Username already exsists</div>
-                )}
+              {this.props.dataStore.usernameExists === true && (
+                <div className="input-feedback">Username already exsists</div>
+              )}
 
-                <br />
-                <Input
-                  name="email"
-                  type="text"
-                  placeholder="Email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disableUnderline={true}
-                  className={errors.email && touched.email && "error"}
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-                <br />
-                <Input
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disableUnderline={true}
-                  className={errors.password && touched.password && "error"}
-                />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
+              <br />
+              <Input
+                name="email"
+                type="text"
+                placeholder="Email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disableUnderline={true}
+                className={errors.email && touched.email && "error"}
+              />
+              {errors.email && touched.email && (
+                <div className="input-feedback">{errors.email}</div>
+              )}
+              <br />
+              <Input
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disableUnderline={true}
+                className={errors.password && touched.password && "error"}
+              />
+              {errors.password && touched.password && (
+                <div className="input-feedback">{errors.password}</div>
+              )}
 
-                {this.props.dataStore.emailExists === true && (
-                  <div className="input-feedback">Email already exsists</div>
-                )}
-                <br />
-                <Input
-                  name="passwordConfirm"
-                  type="password"
-                  placeholder="Confirm Password"
-                  value={values.passwordConfirm}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  disableUnderline={true}
-                  className={
-                    errors.passwordConfirm && touched.passwordConfirm && "error"
-                  }
-                />
-                {errors.passwordConfirm && touched.passwordConfirm && (
-                  <div className="input-feedback">{errors.passwordConfirm}</div>
-                )}
-                <br />
-                <br />
-                <button className="btn waves-effect waves-light" type="submit">
-                  Register
-                </button>
-              </form>
-            </div>
-          </MuiThemeProvider>
+              {this.props.dataStore.emailExists === true && (
+                <div className="input-feedback">Email already exsists</div>
+              )}
+              <br />
+              <Input
+                name="passwordConfirm"
+                type="password"
+                placeholder="Confirm Password"
+                value={values.passwordConfirm}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                disableUnderline={true}
+                className={
+                  errors.passwordConfirm && touched.passwordConfirm && "error"
+                }
+              />
+              {errors.passwordConfirm && touched.passwordConfirm && (
+                <div className="input-feedback">{errors.passwordConfirm}</div>
+              )}
+              <br />
+              <br />
+              <button className="btn waves-effect waves-light" type="submit">
+                Register
+              </button>
+            </form>
+          </div>
         )}
-      />
+      </Formik>
     );
   }
 }

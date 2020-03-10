@@ -30,7 +30,7 @@ class App extends Component {
 
   componentDidMount = () => {
     console.log("cookieID", cookies.get("cookieID"));
-    this.handleLogin();
+    this.props.dataStore.handleLogin();
     console.log("Store: " + this.props.dataStore.count);
     this.props.dataStore.increment();
     console.log("Store: " + this.props.dataStore.count);
@@ -38,50 +38,26 @@ class App extends Component {
     console.log("Store: " + this.props.dataStore.nick);
   };
 
-  handleLogout = (redirectTo = "/") => {
+  handleLogout = () => {
     localStorage.removeItem(ACCESS_TOKEN);
     this.props.dataStore.isAuthenticated = false;
     this.props.dataStore.currentUser = {};
     this.props.history.push("/");
   };
 
-  handleLogin = () => {
-    getCurrentUser().then(response => {
-      this.props.dataStore.currentUser = response;
-      this.props.dataStore.isAuthenticated = true;
-    });
-  };
-
   render() {
     return (
       <div className="App">
-        <Navbar
-          currentUser={this.props.dataStore.currentUser}
-          onLogout={this.handleLogout}
-          onLogin={this.handleLogin}
-        />
+        <Navbar onLogout={this.handleLogout} />
 
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/basket" component={Basket} />
           <Route path="/products/:id" component={ProductDetail} />
           <Route path="/checkout" component={Checkout} />
-          <Route
-            path="/login"
-            render={props => (
-              <ValidatedFormLogin onLogin={this.handleLogin} {...props} />
-            )}
-          ></Route>
-          <Route
-            path="/signup"
-            render={props => <ValidatedSignup {...props} />}
-          ></Route>
-          <Route
-            path="/user"
-            render={props => (
-              <User currentUser={this.props.dataStore.currentUser} {...props} />
-            )}
-          ></Route>
+          <Route path="/login" component={ValidatedFormLogin} />
+          <Route path="/signup" component={ValidatedSignup} />
+          <Route path="/user" component={User} />
         </Switch>
       </div>
     );

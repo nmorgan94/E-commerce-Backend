@@ -17,10 +17,6 @@ class ValidatedLoginForm extends Component {
     super(props);
   }
 
-  handleLogin = () => {
-    this.props.onLogin();
-  };
-
   handleErrors = response => {
     if (response.message == "Bad credentials") {
       this.props.dataStore.badCredentials = true;
@@ -44,7 +40,7 @@ class ValidatedLoginForm extends Component {
           login(loginRequest)
             .then(response => {
               localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-              this.handleLogin();
+              this.props.dataStore.handleLogin();
               this.props.history.push(`/`);
             })
             .catch(error => {

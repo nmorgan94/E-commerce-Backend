@@ -1,8 +1,13 @@
 import { observable, computed, action, configure } from "mobx";
+import { getCurrentUser } from "../utils/APIUtils";
+import { ACCESS_TOKEN } from "../constants";
+import { useHistory } from "react-router";
 
 //configure({ enforceActions: 'observed' })
 
 class DataStore {
+  //const history = useHistory();
+
   @observable isAuthenticated = false;
 
   @observable currentUser = {};
@@ -30,6 +35,20 @@ class DataStore {
   @action increment() {
     this.count++;
   }
+
+  @action handleLogin = () => {
+    getCurrentUser().then(response => {
+      this.currentUser = response;
+      this.isAuthenticated = true;
+    });
+  };
+
+  @action handleLogout = () => {
+    localStorage.removeItem(ACCESS_TOKEN);
+    this.isAuthenticated = false;
+    this.currentUser = {};
+    //history.push("/");
+  };
 }
 
 export default new DataStore();

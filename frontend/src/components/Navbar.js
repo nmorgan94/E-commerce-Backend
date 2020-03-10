@@ -25,7 +25,9 @@ class Navbar extends Component {
               <li>
                 {" "}
                 {this.props.dataStore.isAuthenticated ? (
-                  <span>Hi there {this.props.currentUser.firstName} </span>
+                  <span>
+                    Hi there {this.props.dataStore.currentUser.firstName}{" "}
+                  </span>
                 ) : null}{" "}
               </li>
               <li>
