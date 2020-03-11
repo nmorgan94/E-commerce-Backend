@@ -16,7 +16,7 @@ class DataStore {
 
   @observable basket = {};
 
-  @observable basketContents = [];
+  @observable basketContent = [];
 
   @observable products = [];
 
@@ -52,19 +52,18 @@ class DataStore {
   };
 
   @action getBasket = () => {
-    useEffect(() => {
-      let id = cookies.get("cookieID");
-      fetch(API_BASE_URL + `/basket/baskets/${id}`)
-        .then(response => {
-          console.log(API_BASE_URL);
-          return response.json();
-        })
-        .then(data => {
-          console.log(data);
-          this.basket = data;
-          this.basketContents = data.basketContent;
-        });
-    }, []);
+    let id = cookies.get("cookieID");
+    fetch(API_BASE_URL + `/basket/baskets/${id}`)
+      .then(response => {
+        console.log(API_BASE_URL);
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+        this.basket = data;
+        console.log("this basket" + this.basket);
+        this.basketContent = data.basketContent;
+      });
   };
 }
 
