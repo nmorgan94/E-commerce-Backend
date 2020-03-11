@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { observer, inject } from "mobx-react";
 import { API_BASE_URL } from "../constants";
 import Cookies from "universal-cookie";

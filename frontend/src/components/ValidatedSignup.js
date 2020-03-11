@@ -31,12 +31,9 @@ class ValidatedSignup extends Component {
 
   handleErrors = response => {
     if (response.message === "Username is already taken!") {
-      console.log("ping");
       this.setState({
         usernameExists: true
       });
-
-      console.log("ping" + this.state.usernameExists);
     }
     if (response.message === "Email is already taken!") {
       this.setState({
