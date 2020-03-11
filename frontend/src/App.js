@@ -1,9 +1,9 @@
-import React, { useEffect, Component } from "react";
+import React, { useEffect } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./components/Navbar";
 import { Basket } from "./components/Basket";
-import User from "./components/User";
+import { User } from "./components/User";
 import { Home } from "./components/Home";
 import { Checkout } from "./components/Checkout";
 import ProductDetail from "./components/ProductDetail";

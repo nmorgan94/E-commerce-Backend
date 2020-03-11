@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { observable, computed, action, configure } from "mobx";
-import { getCurrentUser } from "../utils/APIUtils";
+import { observable, action } from "mobx";
 import { ACCESS_TOKEN } from "../constants";
 import { API_BASE_URL } from "../constants";
 import Cookies from "universal-cookie";
@@ -22,24 +20,8 @@ class DataStore {
 
   @observable productDetail = {};
 
-  @observable badCredentials = false;
-
-  @observable userNameExists = false;
-
-  @observable emailExists = false;
-
-  @observable count = 7;
-
-  @action getCount() {
-    return this.count;
-  }
-
-  @action increment() {
-    this.count++;
-  }
-
   @action handleLogin = () => {
-    getCurrentUser().then(response => {
+    this.getCurrentUser().then(response => {
       this.currentUser = response;
       this.isAuthenticated = true;
     });
@@ -49,6 +31,31 @@ class DataStore {
     localStorage.removeItem(ACCESS_TOKEN);
     this.isAuthenticated = false;
     this.currentUser = {};
+  };
+
+  @action request = options => {
+    const headers = new Headers({
+      "Content-Type": "application/json"
+    });
+
+    if (localStorage.getItem(ACCESS_TOKEN)) {
+      headers.append(
+        "Authorization",
+        "Bearer " + localStorage.getItem(ACCESS_TOKEN)
+      );
+    }
+
+    const defaults = { headers: headers };
+    options = Object.assign({}, defaults, options);
+
+    return fetch(options.url, options).then(response =>
+      response.json().then(json => {
+        if (!response.ok) {
+          return Promise.reject(json);
+        }
+        return json;
+      })
+    );
   };
 
   @action getBasket = () => {
@@ -64,6 +71,55 @@ class DataStore {
         console.log("this basket" + this.basket);
         this.basketContent = data.basketContent;
       });
+  };
+
+  @action getProductDetail = id => {
+    fetch(API_BASE_URL + `/products/${id}`)
+      .then(response => {
+        return response.json();
+      })
+      .then(data => {
+        console.log("data: " + data);
+        this.productDetail = data;
+      })
+      .catch(() => console.log("Products api call failed"));
+  };
+
+  @action getProducts = () => {
+    fetch(API_BASE_URL + "/products")
+      .then(response => {
+        console.log(API_BASE_URL);
+        return response.json();
+      })
+      .then(data => (this.products = data))
+      .catch(() => console.log("Products api call failed"));
+  };
+
+  @action getCurrentUser = () => {
+    if (!localStorage.getItem(ACCESS_TOKEN)) {
+      return Promise.reject("No access token set.");
+    }
+
+    return this.request({
+      url: API_BASE_URL + "/user/me",
+      method: "GET"
+    });
+  };
+
+  @action login = loginRequest => {
+    return this.request({
+      url: API_BASE_URL + "/api/auth/signin",
+      method: "POST",
+      body: loginRequest
+    });
+  };
+
+  @action signup = signupRequest => {
+    return this.request({
+      url: API_BASE_URL + "/api/auth/signup",
+      method: "POST",
+      body: signupRequest
+    });
   };
 }
 

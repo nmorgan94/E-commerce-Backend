@@ -1,27 +1,18 @@
-import React, { Component } from "react";
-import { getCurrentUser } from "../utils/APIUtils";
+import React, { useEffect } from "react";
 import { observer, inject } from "mobx-react";
 
-@inject("dataStore")
-@observer
-class User extends Component {
-  constructor(props) {
-    super(props);
-  }
+export const User = inject("dataStore")(
+  observer(({ dataStore }) => {
+    useEffect(() => {
+      dataStore.getCurrentUser();
+    }, []);
 
-  componentDidMount = () => {
-    getCurrentUser().then(response => {
-      this.props.dataStore.currentUser = response;
-    });
-  };
-
-  render() {
     return (
       <div className="container">
         <h3>
-          {this.props.dataStore.isAuthenticated ? (
+          {dataStore.isAuthenticated ? (
             <div>
-              <p>{this.props.dataStore.currentUser.firstName}</p>
+              <p>{dataStore.currentUser.firstName}</p>
             </div>
           ) : (
             <p>Not Signed In</p>
@@ -29,7 +20,5 @@ class User extends Component {
         </h3>
       </div>
     );
-  }
-}
-
-export default User;
+  })
+);

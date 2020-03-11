@@ -1,36 +1,16 @@
 import React, { Component } from "react";
-import Cookies from "universal-cookie";
-import { Redirect } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
 import { observer, inject } from "mobx-react";
-
-const cookies = new Cookies();
 
 @inject("dataStore")
 @observer
 class ProductDetail extends Component {
-  constructor() {
-    super();
-  }
-
-  getProductDetail = id => {
-    fetch(API_BASE_URL + `/products/${id}`)
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        console.log("data: " + data);
-        this.props.dataStore.productDetail = data;
-      })
-      .catch(() => console.log("Products api call failed"));
-  };
-
   componentDidMount() {
     const { id } = this.props.match.params;
-    this.getProductDetail(id);
+    this.props.dataStore.getProductDetail(id);
   }
 
-  handleClick = event => {
+  handleClick = () => {
     let { id } = this.props.match.params;
     fetch(API_BASE_URL + `/basket/add/${id}`, {
       method: "POST"
