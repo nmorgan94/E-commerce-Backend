@@ -1,6 +1,7 @@
 import { observable, action } from "mobx";
 import { ACCESS_TOKEN } from "../constants";
 import { API_BASE_URL } from "../constants";
+import { API_BASE_PORT } from "../constants";
 import Cookies from "universal-cookie";
 
 //configure({ enforceActions: 'observed' })
@@ -60,7 +61,7 @@ class DataStore {
 
   @action getBasket = () => {
     let id = cookies.get("cookieID");
-    fetch(API_BASE_URL + `/basket/baskets/${id}`)
+    fetch(API_BASE_URL + ":" + API_BASE_PORT + `/basket/baskets/${id}`)
       .then(response => {
         console.log(API_BASE_URL);
         return response.json();
@@ -74,7 +75,7 @@ class DataStore {
   };
 
   @action getProductDetail = id => {
-    fetch(API_BASE_URL + `/products/${id}`)
+    fetch(API_BASE_URL + ":" + API_BASE_PORT + `/products/${id}`)
       .then(response => {
         return response.json();
       })
@@ -86,7 +87,7 @@ class DataStore {
   };
 
   @action getProducts = () => {
-    fetch(API_BASE_URL + "/products")
+    fetch(API_BASE_URL + ":" + API_BASE_PORT + "/products")
       .then(response => {
         console.log(API_BASE_URL);
         return response.json();
@@ -101,14 +102,14 @@ class DataStore {
     }
 
     return this.request({
-      url: API_BASE_URL + "/user/me",
+      url: API_BASE_URL + ":" + API_BASE_PORT + "/user/me",
       method: "GET"
     });
   };
 
   @action login = loginRequest => {
     return this.request({
-      url: API_BASE_URL + "/api/auth/signin",
+      url: API_BASE_URL + ":" + API_BASE_PORT + "/api/auth/signin",
       method: "POST",
       body: loginRequest
     });
@@ -116,7 +117,7 @@ class DataStore {
 
   @action signup = signupRequest => {
     return this.request({
-      url: API_BASE_URL + "/api/auth/signup",
+      url: API_BASE_URL + ":" + API_BASE_PORT + "/api/auth/signup",
       method: "POST",
       body: signupRequest
     });

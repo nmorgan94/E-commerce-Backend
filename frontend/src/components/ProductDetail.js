@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { API_BASE_URL } from "../constants";
+import { API_BASE_PORT } from "../constants";
 import { observer, inject } from "mobx-react";
 
 @inject("dataStore")
@@ -12,7 +13,7 @@ class ProductDetail extends Component {
 
   handleClick = () => {
     let { id } = this.props.match.params;
-    fetch(API_BASE_URL + `/basket/add/${id}`, {
+    fetch(API_BASE_URL + ":" + API_BASE_PORT + `/basket/add/${id}`, {
       method: "POST"
     })
       .then(data => {

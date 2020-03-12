@@ -1,14 +1,20 @@
 
-FROM node:12.4.0-alpine as build
-WORKDIR /app
-COPY package.json package-lock.json ./
+# base image
+FROM node:9.4
+
+# set working directory
+WORKDIR /usr/src/app
+
+# install and cache app dependencies
+COPY package*.json ./
+ADD package.json /usr/src/app/package.json
 RUN npm install
-COPY . ./
-ARG REACT_APP_API_BASE_URL
-ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
-RUN npm run build
-FROM nginx:1.17.0-alpine
-COPY --from=build /app/build /var/www
-COPY nginx.conf /etc/nginx/nginx.conf
-EXPOSE 80
-ENTRYPOINT ["nginx","-g","daemon off;"]
+
+# Bundle app source
+COPY . .
+
+# Specify port
+EXPOSE 3000
+
+# start app
+CMD ["npm", "start"]
