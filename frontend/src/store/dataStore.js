@@ -1,12 +1,13 @@
 import { observable, action } from "mobx";
 import { ACCESS_TOKEN } from "../constants";
-import { API_BASE_URL } from "../constants";
-import { API_BASE_PORT } from "../constants";
 import Cookies from "universal-cookie";
 
 //configure({ enforceActions: 'observed' })
 
 const cookies = new Cookies();
+
+let API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost";
+let API_BASE_PORT = process.env.REACT_APP_API_PORT || "8080";
 
 class DataStore {
   @observable isAuthenticated = false;

@@ -1,20 +1,16 @@
-
-# base image
-FROM node:9.4
-
-# set working directory
-WORKDIR /usr/src/app
-
-# install and cache app dependencies
+FROM node:alpine as builder
+WORKDIR /app
 COPY package*.json ./
-ADD package.json /usr/src/app/package.json
-RUN npm install
-
-# Bundle app source
+RUN npm ci
 COPY . .
+ARG REACT_APP_API_BASE_URL
+ENV REACT_APP_API_BASE_URL=${REACT_APP_API_BASE_URL}
+RUN npm run build
 
-# Specify port
+
+FROM node:alpine
+RUN npm install -g serve
+WORKDIR /app
+COPY --from=builder /app/build .
 EXPOSE 3000
-
-# start app
-CMD ["npm", "start"]
+CMD ["serve", "-p", "3000", "-s", "."]
