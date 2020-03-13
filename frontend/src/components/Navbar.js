@@ -12,12 +12,14 @@ export const Navbar = inject("dataStore")(
       history.push("/");
     };
 
+    let title = process.env.REACT_APP_API_NAME || "e-com2";
+
     return (
       <nav>
         <div className="nav-wrapper blue-grey">
           <div className="container">
             <Link to="/" className="brand-logo">
-              e-com
+              {title}
             </Link>
             <ul className="right">
               <li>
