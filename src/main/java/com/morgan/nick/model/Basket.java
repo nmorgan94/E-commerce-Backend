@@ -22,26 +22,24 @@ import lombok.Setter;
 @Table(name = "basket")
 public class Basket implements Serializable {
 	
-	public Basket(long id) {
+	public Basket(Long id) {
 		this.id = id;
 
 	}
+	public Basket(){
 	
-	public Basket() {
-		
 	}
 
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 	@OneToMany(mappedBy = "basket", cascade = CascadeType.ALL,fetch=FetchType.EAGER)
 	private List<BasketItem> basketContent;
 	
 	private double basketPrice;
 	
-	@OneToOne(mappedBy = "basket")
-	private User user;
 
 
 }

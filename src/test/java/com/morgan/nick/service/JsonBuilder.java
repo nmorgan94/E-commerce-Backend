@@ -67,7 +67,7 @@ public class JsonBuilder {
 		
 		Basket authBasket = new Basket();
 		authBasket.setBasketContent(basketContents);
-		authBasket.setId(1);
+		authBasket.setId(1L);
 		
 		try (Writer writer = new FileWriter("src/test/resources/authBasket.json")) {
 		    gson.toJson(authBasket, writer);
@@ -100,7 +100,7 @@ public class JsonBuilder {
 
 		Basket anonBasket = new Basket();
 		anonBasket.setBasketContent(basketContents);
-		anonBasket.setId(1);
+		anonBasket.setId(1L);
 		
 		
 		

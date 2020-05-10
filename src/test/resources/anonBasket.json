@@ -1,1 +1,28 @@
-{"id":1,"basketContent":[{"basketItemId":0,"product":{"id":5,"name":"Beer","price":3.0,"pictureUrl":"https://via.placeholder.com/200X100?text\u003d5"},"totalPrice":3.0,"quantity":1},{"basketItemId":0,"product":{"id":6,"name":"Phone","price":500.0,"pictureUrl":"https://via.placeholder.com/200X100?text\u003d6"},"totalPrice":500.0,"quantity":1}],"basketPrice":0.0}
+{
+  "id": 1,
+  "basketContent": [
+    {
+      "basketItemId": 0,
+      "product": {
+        "id": 5,
+        "name": "Beer",
+        "price": 3.0,
+        "pictureUrl": "https://via.placeholder.com/200X100?text\u003d5"
+      },
+      "totalPrice": 3.0,
+      "quantity": 1
+    },
+    {
+      "basketItemId": 0,
+      "product": {
+        "id": 6,
+        "name": "Phone",
+        "price": 500.0,
+        "pictureUrl": "https://via.placeholder.com/200X100?text\u003d6"
+      },
+      "totalPrice": 500.0,
+      "quantity": 1
+    }
+  ],
+  "basketPrice": 0.0
+}

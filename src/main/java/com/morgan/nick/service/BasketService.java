@@ -14,7 +14,7 @@ public interface BasketService {
 	
 	 Iterable<Basket> getAllBaskets();
 	        	    
-	 Basket getBasket(long id);
+	 Basket getBasket(Long id);
 	 
 	 Basket save(Basket basket);
 	 

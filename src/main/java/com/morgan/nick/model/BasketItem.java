@@ -22,7 +22,7 @@ public class BasketItem implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long basketItemId;
+	private Long basketItemId;
 
 	@ManyToOne
 	@JoinColumn(name = "productId")

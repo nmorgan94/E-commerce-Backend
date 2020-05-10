@@ -62,7 +62,7 @@ public class BasketServiceTest {
 	@Test
 	public void getBasketItemByProductIdTest() throws JsonIOException, IOException {
 		Basket authBasket = gson.fromJson(new FileReader("src/test/resources/authBasket.json"), Basket.class);
-		BasketItem basketItem = basketServiceImpl.getBasketItemByProductId(authBasket.getBasketContent(), 2);
+		BasketItem basketItem = basketServiceImpl.getBasketItemByProductId(authBasket.getBasketContent(), 2L);
 		
 		assertEquals("Game Console", basketItem.getProduct().getName());
 		

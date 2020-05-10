@@ -21,8 +21,9 @@ public class BasketServiceImpl implements BasketService {
 		this.basketRepository = basketRepository;
 	}
 
+
 	@Override
-	public Basket getBasket(long id) {
+	public Basket getBasket(Long id) {
 		return basketRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Basket not found"));
 	}
 
@@ -77,7 +78,7 @@ public class BasketServiceImpl implements BasketService {
 		return authenticatedBasket;
 	}
 
-	public BasketItem getBasketItemByProductId(List<BasketItem> basketContents, long id) {
+	public BasketItem getBasketItemByProductId(List<BasketItem> basketContents, Long id) {
 
 		BasketItem basketItem = basketContents.stream().filter(item -> id == item.getProduct().getId()).findAny()
 				.orElse(null);
@@ -85,7 +86,7 @@ public class BasketServiceImpl implements BasketService {
 		return basketItem;
 	}
 
-	public void test(long id) {
+	public void test(Long id) {
 
 	}
 

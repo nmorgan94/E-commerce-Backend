@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.morgan.nick.exception.ResourceNotFoundException;
+import com.morgan.nick.model.Basket;
 import com.morgan.nick.model.Product;
 import com.morgan.nick.model.Role;
 import com.morgan.nick.model.User;
@@ -14,10 +15,15 @@ import com.morgan.nick.repository.UserRepository;
 public class UserServiceImpl implements UserService{
 	
     private UserRepository userRepository;
+    private final BasketService basketService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BasketService basketService) {
         this.userRepository = userRepository;
+        this.basketService = basketService;
     }
+
+
+
     
     @Override
     public Iterable<User> getAllUsers() {
@@ -31,6 +37,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(User user) {
+        Basket basket = new Basket();
+        basket = basketService.save(basket);
+        user.setBasketId(basket.getId());
         return userRepository.save(user);
     }
     

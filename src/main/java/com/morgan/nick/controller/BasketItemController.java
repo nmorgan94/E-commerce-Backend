@@ -33,9 +33,9 @@ public class BasketItemController {
 	}
 
 	@RequestMapping(value = "/basket/add/{productId}", method = RequestMethod.POST)
-	public Basket addBasketItem(@PathVariable(value = "productId") long productId) {
-
-		Basket basket = basketService.getBasket(1);
+	public Basket addBasketItem(@PathVariable(value = "productId") Long productId) {
+		Long id = 1L;
+		Basket basket = basketService.getBasket(id);
 		List<BasketItem> basketContents = basket.getBasketContent();
 		Product product = productService.getProduct(productId);
 
