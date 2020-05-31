@@ -62,9 +62,6 @@ public class AuthController {
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
                 String jwt = tokenProvider.generateToken(authentication);
-
-                Long id = tokenProvider.getUserIdFromJWT(jwt);
-                User user = userService.getUser(id);
                 return ResponseEntity.ok(new JwtAuthenticationResponse(jwt));
         }
 
@@ -90,7 +87,7 @@ public class AuthController {
 
                 user.setRoles(Collections.singleton(userRole));
 
-                User result = userRepository.save(user);
+                User result = userService.save(user);
 
                 URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/{username}")
                                 .buildAndExpand(result.getUsername()).toUri();

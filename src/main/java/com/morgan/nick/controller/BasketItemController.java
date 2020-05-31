@@ -1,9 +1,6 @@
 package com.morgan.nick.controller;
 
 import java.util.List;
-
-import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +29,10 @@ public class BasketItemController {
 		this.basketItemService = basketItemService;
 	}
 
-	@RequestMapping(value = "/basket/add/{productId}", method = RequestMethod.POST)
-	public Basket addBasketItem(@PathVariable(value = "productId") Long productId) {
-		Long id = 1L;
-		Basket basket = basketService.getBasket(id);
+	@RequestMapping(value = "/basket/add/{productId}/{basketId}", method = RequestMethod.POST)
+	public Basket addBasketItem(@PathVariable(value = "productId") Long productId, @PathVariable(value = "basketId") Long basketId) {
+
+		Basket basket = basketService.getBasket(basketId);
 		List<BasketItem> basketContents = basket.getBasketContent();
 		Product product = productService.getProduct(productId);
 

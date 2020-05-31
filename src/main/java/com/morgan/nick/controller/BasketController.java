@@ -4,11 +4,9 @@ package com.morgan.nick.controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.morgan.nick.model.Basket;
-import com.morgan.nick.model.Product;
 import com.morgan.nick.service.BasketService;
 
 @RestController

@@ -1,4 +1,9 @@
 FROM maven:3.5.3-jdk-8-alpine as target
+
+ENV DB_CONNECTION_STRING $DB_CONNECTION_STRING
+
+ENV JWT_SECRET $JWT_SECRET
+
 WORKDIR /build
 COPY pom.xml .
 RUN mvn dependency:go-offline

@@ -32,18 +32,8 @@ public class UserController {
 	        return new ResponseEntity<>(users, HttpStatus.OK);
 	    }
 	    
-	    
-		@RequestMapping(value = "/addUser", method = RequestMethod.POST)
-		public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-
-			if (user != null) {
-				return new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);
-			} else
-				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
 		
 	    @GetMapping("/user/me")
-	    @PreAuthorize("hasRole('USER')")
 	    public User getCurrentUser(@CurrentUser UserPrincipal currentUser) {
 	    	User user = new User();
 	    	user.setFirstName(currentUser.getFirstName());
