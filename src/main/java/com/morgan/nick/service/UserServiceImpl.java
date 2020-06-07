@@ -5,8 +5,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.morgan.nick.exception.ResourceNotFoundException;
 import com.morgan.nick.model.Basket;
-import com.morgan.nick.model.Product;
-import com.morgan.nick.model.Role;
 import com.morgan.nick.model.User;
 import com.morgan.nick.repository.UserRepository;
 

@@ -15,14 +15,11 @@ import com.morgan.nick.exception.AppException;
 import com.morgan.nick.model.Basket;
 import com.morgan.nick.model.BasketItem;
 import com.morgan.nick.model.Product;
-import com.morgan.nick.model.Role;
-import com.morgan.nick.model.RoleName;
 import com.morgan.nick.model.User;
-import com.morgan.nick.repository.RoleRepository;
 import com.morgan.nick.repository.UserRepository;
 import com.morgan.nick.service.BasketService;
 import com.morgan.nick.service.ProductService;
-import com.morgan.nick.service.RoleService;
+
 import com.morgan.nick.service.UserService;
 
 @SpringBootApplication
@@ -36,15 +33,13 @@ public class ECommerceApplication {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    @Autowired
-    RoleRepository roleRepository;
 
     @Autowired
     UserRepository userRepository;
 
     @Bean
     @Profile("dev")
-    CommandLineRunner runner(ProductService productService, BasketService basketService, RoleService roleService,
+    CommandLineRunner runner(ProductService productService, BasketService basketService,
             UserService userService) {
         return args -> {
             productService.save(new Product(1L, "TV Set", 300.00, "https://via.placeholder.com/200X100?text=1"));
@@ -57,15 +52,9 @@ public class ECommerceApplication {
 
             basketService.save(new Basket());
 
-            roleService.save(new Role(RoleName.ROLE_USER));
-            roleService.save(new Role(RoleName.ROLE_ADMIN));
 
             User user = new User("Nick", "nick94", "nick@morgan.com", passwordEncoder.encode("password"));
 
-            Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                    .orElseThrow(() -> new AppException("User Role not set."));
-
-            user.setRoles(Collections.singleton(userRole));
             userService.save(user);
 
         };

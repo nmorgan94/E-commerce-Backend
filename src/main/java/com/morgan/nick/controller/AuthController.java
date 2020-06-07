@@ -15,14 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.morgan.nick.exception.AppException;
-import com.morgan.nick.model.Role;
-import com.morgan.nick.model.RoleName;
 import com.morgan.nick.model.User;
 import com.morgan.nick.payloads.ApiResponse;
 import com.morgan.nick.payloads.JwtAuthenticationResponse;
 import com.morgan.nick.payloads.LoginRequest;
 import com.morgan.nick.payloads.SignUpRequest;
-import com.morgan.nick.repository.RoleRepository;
+
 import com.morgan.nick.repository.UserRepository;
 import com.morgan.nick.security.JwtTokenProvider;
 import com.morgan.nick.service.UserService;
@@ -41,8 +39,7 @@ public class AuthController {
         @Autowired
         UserRepository userRepository;
 
-        @Autowired
-        RoleRepository roleRepository;
+
 
         @Autowired
         UserService userService;
@@ -82,10 +79,6 @@ public class AuthController {
 
                 user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-                Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-                                .orElseThrow(() -> new AppException("User Role not set."));
-
-                user.setRoles(Collections.singleton(userRole));
 
                 User result = userService.save(user);
 

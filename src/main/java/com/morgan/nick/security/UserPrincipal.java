@@ -30,31 +30,27 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String firstName, String username, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String firstName, String username, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.authorities = authorities;
+   
     }
 
     public static UserPrincipal create(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName().name())
-        ).collect(Collectors.toList());
+
 
         return new UserPrincipal(
                 user.getId(),
                 user.getFirstName(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
-                authorities
+                user.getPassword()
+          
         );
     }
-
-
 
     @Override
     public boolean isAccountNonExpired() {
