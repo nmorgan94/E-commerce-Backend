@@ -12,6 +12,7 @@ import com.morgan.nick.model.Product;
 import com.morgan.nick.service.ProductService;
 
 @RestController
+@RequestMapping("/api")
 public class ProductController {
 
     private ProductService productService;

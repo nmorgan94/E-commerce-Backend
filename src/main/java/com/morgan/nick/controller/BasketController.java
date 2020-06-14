@@ -10,6 +10,7 @@ import com.morgan.nick.model.Basket;
 import com.morgan.nick.service.BasketService;
 
 @RestController
+@RequestMapping("/api")
 public class BasketController {
 	
 	BasketService basketService;
@@ -18,23 +19,23 @@ public class BasketController {
         this.basketService = basketService;
     }
 	
-    @RequestMapping(value = "basket/baskets", method = RequestMethod.GET)
+    @RequestMapping(value = "/basket/baskets", method = RequestMethod.GET)
     public Iterable<Basket> getBaskets() {
         return basketService.getAllBaskets();
     }
     
-    @RequestMapping(value = "basket/createbasket", method = RequestMethod.POST)
+    @RequestMapping(value = "/basket/createbasket", method = RequestMethod.POST)
 	Basket newBasket(Basket newBasket) {
 		return basketService.save(newBasket);
 	}
     
-    @RequestMapping(value = "basket/createbasket/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/basket/createbasket/{id}", method = RequestMethod.POST)
 	Basket newBasketwithId(@PathVariable Long id) {
     	
 		return basketService.save(new Basket(id));
 	}
     
-    @RequestMapping(value = "basket/baskets/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/basket/baskets/{id}", method = RequestMethod.GET)
     public Basket getProduct(@PathVariable Long id) {
         return basketService.getBasket(id);
     }

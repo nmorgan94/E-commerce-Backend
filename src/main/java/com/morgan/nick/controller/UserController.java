@@ -18,6 +18,7 @@ import com.morgan.nick.security.UserPrincipal;
 import com.morgan.nick.service.UserService;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
 
 	private UserService userService;

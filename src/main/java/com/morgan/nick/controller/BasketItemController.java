@@ -15,6 +15,7 @@ import com.morgan.nick.service.BasketService;
 import com.morgan.nick.service.ProductService;
 
 @RestController
+@RequestMapping("/api")
 public class BasketItemController {
 
 	private BasketItemService basketItemService;
