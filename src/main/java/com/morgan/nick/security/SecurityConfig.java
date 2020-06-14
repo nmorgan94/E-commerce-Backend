@@ -57,8 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
     	
-    	http.authorizeRequests().antMatchers("/").permitAll().and()
-           .authorizeRequests().antMatchers("/h2-console/**").permitAll();
+    	http.authorizeRequests().antMatchers("/h2-console/**").permitAll();
     	http.csrf().disable();
     	http.headers().frameOptions().disable();
     	
@@ -86,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         .permitAll()
                     .antMatchers("/api/basket/**", "/api/auth/**")
                         .permitAll()
-                    .antMatchers(HttpMethod.GET, "/api/users/**", "/api/products/**", "/api/basket/**")
+                    .antMatchers(HttpMethod.GET, "/api/users/**", "/api/products/**")
                         .permitAll()
                     .anyRequest()
                         .authenticated();
